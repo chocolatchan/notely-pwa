@@ -1,0 +1,14 @@
+version: '3.8'
+services:
+  notely-app:
+    image: node:20-alpine
+    container_name: notely-pwa-dev
+    volumes:
+      - ./notely-pwa:/app
+      - /app/node_modules
+    working_dir: /app
+    ports:
+      - "5173:5173"
+    environment:
+      - NODE_ENV=development
+    command: sh -c "npm install && npm run dev"
