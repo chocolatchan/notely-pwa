@@ -3,37 +3,46 @@ import react from '@vitejs/plugin-react';
 import { VitePWA } from 'vite-plugin-pwa';
 
 export default defineConfig({
+  envDir: '../',
   plugins: [
     react(),
     VitePWA({
+      registerType: 'autoUpdate',
       strategies: 'injectManifest',
       srcDir: 'src',
       filename: 'service-worker.ts',
       manifest: {
-        name: 'Notely - Offline Notes',
+        name: 'Notely - Smart Note Taking',
         short_name: 'Notely',
-        description: 'Ghi chú offline thông minh với giọng nói',
-        theme_color: '#000000',
+        description: 'Smart offline-first note taking app with voice and media support.',
+        theme_color: '#6366f1', // Indigo color matching modern designs
         background_color: '#ffffff',
         display: 'standalone',
+        orientation: 'portrait',
+        scope: '/',
+        start_url: '/',
         icons: [
           {
             src: 'icons/icon-192.png',
             sizes: '192x192',
-            type: 'image/png'
+            type: 'image/png',
+            purpose: 'any maskable'
           },
           {
             src: 'icons/icon-512.png',
             sizes: '512x512',
-            type: 'image/png'
+            type: 'image/png',
+            purpose: 'any maskable'
           }
         ]
       },
       injectManifest: {
         rollupFormat: 'iife',
+        maximumFileSizeToCacheInBytes: 5 * 1024 * 1024, // 5MB
       },
       devOptions: {
-        enabled: true
+        enabled: true,
+        type: 'module',
       }
     })
   ],

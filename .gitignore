@@ -1,0 +1,11 @@
+# IDE and Build
+**/node_modules/
+**/.vite/
+.env
+
+# Mobile and Build artifacts
+client/dist/
+server/dist/
+**/npm-debug.log*
+**/yarn-debug.log*
+**/yarn-error.log*
