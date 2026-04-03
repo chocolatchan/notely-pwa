@@ -103,7 +103,7 @@ const NoteBlock: React.FC<NoteBlockProps> = ({ note, onUpdate, onDelete, onTrigg
         </div>
         
         <div style={{ borderRadius: 8, overflow: 'hidden', position: 'relative' }}>
-          <img src={note.content} alt="" loading="lazy" decoding="async" style={{ width: '100%', height: 'auto', display: 'block' }} />
+          <img src={note.content} alt="" style={{ width: '100%', height: 'auto', display: 'block' }} />
           {isHovered && (
              <button 
                onClick={() => onDelete(note.id!)}

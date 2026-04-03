@@ -1,13 +1,9 @@
-/* Font loaded via <link rel="preload"> in index.html to avoid render-blocking */
+/* ─── Google Font: Inter ─── */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-/* Spinner for lazy-loading fallback */
-@keyframes spin {
-  to { transform: rotate(360deg); }
-}
 
 /* ════════════════════════════════════════════════════════
    NOTELY — TRUE MINIMALISM (Linear/Notion Inspired)
