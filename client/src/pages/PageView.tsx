@@ -8,7 +8,7 @@ import NoteBlock from '../components/NoteBlock';
 import CameraCapture from '../components/CameraCapture';
 import AudioCapture from '../components/AudioCapture';
 
-const API_BASE = 'http://localhost:3000';
+const API_BASE = '';
 
 const PageView: React.FC = () => {
   const { id: pageIdStr } = useParams<{ id: string }>();

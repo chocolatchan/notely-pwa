@@ -7,8 +7,8 @@ services:
       - ./client:/app
     working_dir: /app
     environment:
-      - NODE_ENV=development
-    command: sh -c "npm install && npm run dev"
+      - NODE_ENV=production
+    command: sh -c "npm install && npm run build && npm run preview -- --host --port 5173"
 
   notely-api:
     image: node:20-alpine
@@ -16,7 +16,7 @@ services:
       - ./server:/app
     working_dir: /app
     environment:
-      - NODE_ENV=development
+      - NODE_ENV=production
       - MONGO_URI=mongodb://mongodb:27017/notely
       - PORT=3000
     command: sh -c "npm install && npm start"
@@ -37,18 +37,6 @@ services:
     depends_on:
       - notely-app
       - notely-api
-
-  ngrok:
-    image: ngrok/ngrok:latest
-    environment:
-      - NGROK_AUTHTOKEN=${NGROK_AUTHTOKEN}
-    command:
-      - "http"
-      - "nginx:80"
-    ports:
-      - "4040:4040"
-    depends_on:
-      - nginx
 
 volumes:
   mongodb_data:
