@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getPages, addPage, deletePage, LocalPage } from '../lib/db';
-import { Plus, Search, Trash2, FileText, X } from 'lucide-react';
+import { Plus, Search, Trash2, FileText, X, Bell } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const Dashboard: React.FC = () => {
@@ -58,6 +58,31 @@ const Dashboard: React.FC = () => {
     p.title.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
+  const testPushNotification = async () => {
+    let permission = Notification.permission;
+    if (permission !== 'granted') {
+      permission = await Notification.requestPermission();
+    }
+    
+    if (permission === 'granted') {
+      if ('serviceWorker' in navigator) {
+        const registration = await navigator.serviceWorker.ready;
+        alert("Test Push Notification sẽ hiển thị sau 3 giây. Tranh thủ ẩn trình duyệt xuống để test Background Push nhé!");
+        setTimeout(() => {
+          registration.showNotification('Notely Deadline Reminder', {
+            body: 'Bạn có công việc "Todo" vừa đến hạn!',
+            icon: '/icons/icon-192.png',
+            badge: '/icons/icon-192.png'
+          });
+        }, 3000);
+      } else {
+        new Notification('Notely Deadline Reminder', { body: 'Bạn có công việc "Todo" vừa đến hạn!' });
+      }
+    } else {
+      alert("Bạn chưa cấp quyền gửi thông báo cho Notely!");
+    }
+  };
+
   return (
     <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', alignItems: 'center', position: 'relative' }}>
       
@@ -66,10 +91,20 @@ const Dashboard: React.FC = () => {
         {/* Header */}
         <header style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 40 }}>
            <h1 className="text-h1">Notely</h1>
-           <button className="btn-primary" onClick={() => setShowNewNoteDialog(true)}>
-              <Plus size={16} strokeWidth={2.5} style={{ marginRight: 6 }} />
-              New
-           </button>
+           <div style={{ display: 'flex', gap: 12 }}>
+             <button 
+               className="btn-icon" 
+               onClick={testPushNotification} 
+               title="Test Todo Push Notification"
+               style={{ background: 'var(--bg-secondary)' }}
+             >
+                <Bell size={18} strokeWidth={2} />
+             </button>
+             <button className="btn-primary" onClick={() => setShowNewNoteDialog(true)}>
+                <Plus size={16} strokeWidth={2.5} style={{ marginRight: 6 }} />
+                New
+             </button>
+           </div>
         </header>
 
         {/* Search */}
